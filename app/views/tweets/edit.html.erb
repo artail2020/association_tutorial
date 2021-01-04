@@ -1,5 +1,5 @@
-<h1>Tweets#new</h1>
-<p>Find me in app/views/tweets/new.html.erb</p>
+<h1>Tweets#edit</h1>
+<p>Find me in app/views/tweets/edit.html.erb</p>
 
 <div class="row my-3 py-3 border-top">
   <%= form_for @tweet, html: {class: "col-12"} do |f| %>
@@ -10,6 +10,7 @@
   <p class="row px-3">
     <%= f.file_field :image, class: "col-12" %>
   </p>
-  <%= f.submit "ツイートする", class: "btn btn-success btn-sm" %>
+  <%= f.submit "ツイート更新", class: "btn btn-success btn-sm" %>
   <% end %>
+  <p class="col-12 p-3"><span><%= link_to "戻る", tweet_path(@tweet.id), class: "btn btn-primary btn-sm" %></span></p>
 </div>
