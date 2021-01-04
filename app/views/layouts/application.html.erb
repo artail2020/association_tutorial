@@ -10,16 +10,24 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>  <!-- deviseのメソッドで、「ログインしているかしていないかでtrue or falseを返す」メソッド -->
-      <%= link_to "新規投稿", new_tweet_path %>
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <%= link_to "マイページ", user_path(current_user.id) %>
-    <% else %>
-      <%= link_to "新規登録", new_user_registration_path %>
-      <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
-    <%= link_to "ツイート一覧", tweets_path %>
-    <%= link_to "ユーザー一覧", users_path %>
-    <%= yield %>
+    <header class="sticky-top bg-info">
+      <div class="container text-center">
+        <ul class="row list-group list-group-horizontal list-unstyled border-white">
+          <% if user_signed_in? %>  <!-- deviseのメソッドで、「ログインしているかしていないかでtrue or falseを返す」メソッド -->
+            <li class="col-4 col-md p-2"><%= link_to "新規投稿", new_tweet_path, class: "text-white" %></li>
+            <li class="col-4 col-md p-2"><%= link_to "ログアウト",  destroy_user_session_path, method: :delete, class: "text-white" %></li>
+            <li class="col-4 col-md p-2"><%= link_to "マイページ", user_path(current_user.id), class: "text-white" %></li>
+          <% else %>
+            <li class="col-4 col-md p-2"><%= link_to "新規登録", new_user_registration_path, class: "text-white" %></li>
+            <li class="col-4 col-md p-2"><%= link_to "ログイン", new_user_session_path, class: "text-white" %></li>
+          <% end %>
+          <li class="col-4 col-md p-2"><%= link_to "ツイート一覧", tweets_path, class: "text-white" %></li>
+          <li class="col-4 col-md p-2"><%= link_to "ユーザー一覧", users_path, class: "text-white" %></li>
+        </ul>
+      </div>
+    </header>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
