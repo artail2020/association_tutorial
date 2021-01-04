@@ -22,8 +22,26 @@ class TweetsController < ApplicationController
     redirect_to tweets_path
   end
 
+  def edit
+    @tweet = Tweet.find(params[:id])
+  end
+
+  def update
+    @tweet = Tweet.find(params[:id])
+    @tweet.update(tweet_params)
+    redirect_to tweet_path(@tweet.id)
+  end
+
+  def destroy
+    tweet = Tweet.find(params[:id])
+    if tweet.user_id == current_user.id
+      tweet.destroy
+    end
+    redirect_to tweets_path
+  end
+
   private
     def tweet_params
-      params.require(:tweet).permit(:body) # tweetモデルのカラムのみを許可
+      params.require(:tweet).permit(:body, :image) # tweetモデルのカラムのみを許可
     end
 end
