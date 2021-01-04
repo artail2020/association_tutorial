@@ -1,26 +1,38 @@
 <h1>Tweets#index</h1>
 <p>Find me in app/views/tweets/index.html.erb</p>
 
-<% @tweets.each do |tweet| %>
-  <hr>
-  <p><span>email: </span><%=link_to tweet.user.email, user_path(tweet.user.id) %></p>
-  <p><span>ツイート内容: </span><%=link_to tweet.body, tweet_path(tweet.id) %></p>
-  <% if user_signed_in? %>
-    <% if tweet.favorited_by?(current_user) %> <!-- ログインしているユーザーがファボしたかどうかで分岐 -->
-        <p><span>お気に入り解除: </span><%=link_to tweet.favorites.count, tweet_favorites_path(tweet.id), method: :delete %></p>
-    <% else %>
-        <p><span>お気に入り登録: </span><%=link_to tweet.favorites.count, tweet_favorites_path(tweet.id), method: :post %></p>
-    <% end %>
-
-    <% if current_user != tweet.user %>
-      <% if tweet.user.followed_by?(current_user) %>
-      <p><%= link_to "フォロー済み", user_relationships_path(tweet.user.id), method: :delete %></p>
-      <% else %>
-      <p><%= link_to "フォローする", user_relationships_path(tweet.user.id), method: :post %></p>
+<div class="row">
+  <% @tweets.each do |tweet| %>
+  <article class="card p-1 my-1 col-12">
+    <div class="card-body row">
+      <h4 class="card-title col-12 col-md-9"><span>email: </span><%= link_to tweet.user.email, user_path(tweet.user.id) %></h4>
+      <% if user_signed_in? && current_user != tweet.user %>
+      <div class="col-12 col-md-3">
+        <% if tweet.user.followed_by?(current_user) %>
+        <p class="text-right my-auto"><%= link_to "フォロー済み", user_relationships_path(tweet.user.id), method: :delete, class: "btn btn-outline-primary" %></p>
+        <% else %>
+        <p class="text-right my-auto"><%= link_to "フォローする", user_relationships_path(tweet.user.id), method: :post, class: "btn btn-primary" %></p>
+        <% end %>
+      </div>
       <% end %>
-    <% end %>
-
-  <% else %>
-    <p><span>お気に入り数: </span><%= tweet.favorites.count %></p>
+      <p class="card-text col-12 mb-4 border-top border-secondary mt-2 pt-2"><span>ツイート内容: </span><%= link_to tweet.body, tweet_path(tweet.id), class: "lead" %></p>
+      <div class="col-12">
+        <div class="row h-100">
+          <p class="col-5 my-auto">
+            <% if user_signed_in? %>
+            <% if tweet.favorited_by?(current_user) %> <!-- ログインしているユーザーがファボしたかどうかで分岐 -->
+            <%= link_to "お気に入り解除: #{tweet.favorites.count}", tweet_favorites_path(tweet.id), method: :delete, class: "btn btn-outline-info" %>
+            <% else %>
+            <%= link_to "お気に入り登録: #{tweet.favorites.count}", tweet_favorites_path(tweet.id), method: :post, class: "btn btn-info" %>
+            <% end %>
+            <% else %>
+            <span class="btn btn-outline-dark disabled">お気に入り数: <%= tweet.favorites.count %></span>
+            <% end %>
+          </p>
+          <p class="col-7 text-right mt-auto mb-0"><span class="align-bottom">(<%= tweet.created_at %>)</span></p>
+        </div>
+      </div>
+    </div>
+  </article>
   <% end %>
-<% end %>
+</div>

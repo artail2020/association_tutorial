@@ -1,10 +1,12 @@
 <h1>Tweets#new</h1>
 <p>Find me in app/views/tweets/new.html.erb</p>
 
-<%= form_for @tweet do |f| %>
-  <p>
-    <%= f.label :body,"ツイート" %>
-    <%= f.text_field :body %>
+<div class="row my-3 py-3 border-top">
+  <%= form_for @tweet, html: {class: "col-12"} do |f| %>
+  <p class="row px-3">
+    <%= f.label :body,"ツイート", class: "col-10 col-md-2" %>
+    <%= f.text_field :body, class: "col-10 col-md-auto" %>
   </p>
-  <%= f.submit %>
-<% end %>
+  <%= f.submit "ツイートする", class: "btn btn-success btn-sm" %>
+  <% end %>
+</div>
