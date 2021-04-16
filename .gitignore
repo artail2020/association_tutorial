@@ -110,3 +110,4 @@ yarn-debug.log*
 
 .DS_Store
 config/database.yml
+config/environments/development.rb
